@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Developers</a>
+      </div>
+      <div class="collapse navbar-collapse">
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <header class="jumbotron">
+      <div class="container">
+        <h1>Welcome to <%= title %></h1>
+        <p>The spotted points in images below shows the people not maintaining social distance(minimum threshold)</p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="container">
+        <h3> The images below are taken from the following CCTV camera footage(updated several minutes)</h3><br>
+      </div>
+      <iframe width=48% height="315" src="https://www.youtube.com/embed/hZ2QiiHyTnU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width=48% height="315" src="https://www.youtube.com/embed/1DvTwuByjo0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width=97% height="315" src="https://www.youtube.com/embed/zWh3CShX_do" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <br>
+    <div class="row text-center" style="display: flex;flex-wrap: wrap;">
+    <% for(var i = 0; i < images.length; i++) {%>
+      <div class="col-md-6 col-sm-6">
+        <div class="thumbnail">
+          <img src=<%= images[i] %>>
+        </div>
+      </div>
+    <%}%>
+    </div>
+    <br>
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Shop timings: 9:00 am to 10:00 pm.</h2>
+        <h2><%= people %> people can be served today.(taken at  <%= time%>).</h2>
+      </div>
+    </div>
+  </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" integrity="sha256-qM7QTJSlvtPSxVRjVWNM2OfTAz/3k5ovHOKmKXuYMO4=" crossorigin="anonymous"></script>
+</html>
+
+
