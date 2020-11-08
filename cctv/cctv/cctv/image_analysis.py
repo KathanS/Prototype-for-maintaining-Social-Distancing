@@ -44,16 +44,38 @@ def socialDistance(locs, thre):
         dis.append(darr)
 
     sn = 0
+    psn = [0 for i in range(n)]
 
-    for i in dis:
+    for ind,i in enumerate(dis):
         for j in i:
             if j!=None and j<thre:
                 sn+=1
+                psn[ind] = 1
+    
+    psnLoc = []
+    
+    for i in range(n):
+        if psn[i]==1:
+            psnLoc.append((locs[i][0],locs[i][1],locs[i][2],locs[i][3]))
 
-    return sn
+    return psnLoc
+    
+def queueLimit(avgTime, locs, remTime):
+    num_persons = remTime//avgTime
+    sortArr = []
+    for i in locs:
+        sortArr.append(i[1])
+    sortArr.sort()
+    return (num_persons, sortArr[num_persons])
 
-locs = people_locations('https://previews.123rf.com/images/microstockasia/microstockasia1611/microstockasia161120865/69410827-three-indian-people-talking-together-and-laughing.jpg')
-
-n = socialDistance(locs, 0.5)
-
-print(n/2) # will print number of people who are not maintaining social distance
+def triangleCams(locs1, locs2):
+    ylim = 0.55
+    sortArr = []
+    for i in locs:
+        sortArr.append(i[0])
+    sortArr.sort()
+    i = 0
+    while sortArr[i]<0.55:
+        i+=1
+    i+=len(locs2)
+    return i
