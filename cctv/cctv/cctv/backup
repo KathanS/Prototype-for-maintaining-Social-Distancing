@@ -1,0 +1,141 @@
+import math
+
+def people_locations(image_url):
+
+    from clarifai.rest import ClarifaiApp
+
+    app = ClarifaiApp(api_key='940c1262c8004ae5a8b4688ba80cff31')
+
+    model = app.public_models.face_detection_model
+    response = model.predict_by_url(url=image_url)
+
+    locData = response['outputs'][0]['data']['regions']
+
+    locs = []
+
+    for i in locData:
+        if i['data']['concepts'][0]['value']>0.8:
+            d = i['region_info']['bounding_box']
+            c = []
+            c.append(d['top_row'])
+            c.append(d['left_col'])
+            c.append(d['bottom_row'])
+            c.append(d['right_col'])
+            locs.append(c)
+
+    #print(locs)
+
+    #locC = []
+
+    #for i in locs:
+        #ld = {}
+        #ld['top_left'] = (i[1], i[0])
+        #ld['top_right'] = (i[3], i[0])
+        #ld['bottom_right'] = (i[3],i[2])
+        #ld['bottom_left'] = (i[1], i[2])
+        #locC.append(ld)
+
+    #print(locC)
+
+    return locs
+
+# focal length, pixels, width
+
+def socialDistance(box_measures, tvar, pi, var2):
+    def midpoint(ptA, ptB):
+        return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
+    center = []
+    count = 0
+    box_array = [[0 for i in range(2)] for j in range(4)]
+    for tt in box_measures:
+        for i, (k, v) in enumerate(tt.items()):
+            if i == 4:
+                xx = 0
+                yy = 0
+                for ii in range(4):
+                    xx += ii[0]/4
+                    yy += ii[1]/4
+                center.append(xx, yy)
+                break
+            box_array[i][count], box_array[i][count + 1] = v[0], v[1]
+
+
+    count = 0
+    box0_array = [[0 for i in range(2)] for j in range(4)]
+    for i, (k, v) in enumerate(box_measures[pi].items()):
+        if i == 4:
+            break
+        box0_array[i][count], box0_array[i][count + 1] = v[0], v[1]
+    (tl, tr, br, bl) = box0_array
+    (tlblX, tlblY) = midpoint(tl, bl)
+    (trbrX, trbrY) = midpoint(tr, br)
+    D = math.sqrt((tlblX - trbrX) ** 2 + (tlblY - trbrY) ** 2)
+    lll = len(box0_array)
+    cX = 0
+    cY = 0
+    for i in box0_array:
+        cX += i[0] / lll
+        cY += i[1] / lll
+    refObj = (box0_array, (cX, cY), D / tvar)
+
+    for temp,t in enumerate(box_measures):
+        for i, (k, v) in enumerate(t.items()):
+            if i == 4:
+                break
+            box0_array[i][count], box0_array[i][count + 1] = v[0], v[1]
+
+        lll = len(box0_array)
+        cX = 0
+        cY = 0
+        for i in box0_array:
+            cX+=i[0]/lll
+            cY+=i[1]/lll
+
+        if temp==pi:
+            continue
+
+        D = math.sqrt((refObj[1][0] - cX)**2 + (refObj[1][1] - cY)**2) / refObj[2]
+        (mX, mY) = midpoint((refObj[1][0], refObj[1][1]), (cX, cY))
+
+        sn = 0
+
+        if D > var2:  # Success
+            pass
+        else:
+            sn+=1
+
+        return sn
+
+
+def socialDistance1(locs, thre):
+    cX = [(i[1] + i[3])/2 for i in locs]
+    cY = [(i[0] + i[2])/2 for i in locs]
+
+    dis = []
+
+    n = len(locs)
+
+    for i in range(n):
+        darr = []
+        for j in range(n):
+            if i!=j:
+                pd = math.sqrt((cX[i]-cX[j])**2 + (cY[i] - cY[j])**2)
+                darr.append(pd)
+            else:
+                darr.append(None)
+        dis.append(darr)
+
+    sn = 0
+
+    for i in dis:
+        for j in i:
+            if j!=None and j<thre:
+                sn+=1
+
+    return sn
+
+locs = people_locations('https://thumbs.dreamstime.com/b/three-business-people-talking-outside-office-31691946.jpg')
+
+n = socialDistance1(locs, 0.5)
+
+print(n)
