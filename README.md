@@ -11,4 +11,4 @@ time outside the shop and crowd counting. Backend was done in Python.
 ## Web UI:
 ![Web UI](Images/web_ui_1.jpg)
 
-### Images folder contains other output images and ui screenshots.
+### Images folder contains other output images and user interface screenshots.
