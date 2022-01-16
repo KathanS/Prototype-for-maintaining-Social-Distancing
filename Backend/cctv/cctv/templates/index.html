@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Advance Computer Vision Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <style>
+        body {
+          padding: 50px;
+          font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+          background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+          background-size: 500% 500%;
+          animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        a {
+          color: #00B7FF;
+}
+      </style>
+  </head>
+  <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Developers</a>
+      </div>
+      <div class="collapse navbar-collapse">
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <header class="jumbotron">
+      <div class="container">
+        <h1>Welcome to Advance Computer Vision Project</h1>
+        <p>The spotted points in images below shows the people not maintaining social distance(minimum threshold)</p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="container">
+        <h3> The images below are taken from the following CCTV camera footage(updated several minutes)</h3><br>
+      </div>
+      <iframe width=48% height="315" src="https://www.youtube.com/embed/hZ2QiiHyTnU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width=48% height="315" src="https://www.youtube.com/embed/1DvTwuByjo0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width=97% height="315" src="https://www.youtube.com/embed/zWh3CShX_do" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <br>
+    <div class="row text-center" style="display: flex;flex-wrap: wrap;">
+    {%for img in imgs%}
+      <div class="col-md-6 col-sm-6">
+        <div class="thumbnail">
+          <img src={{ img }}>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    <br>
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Shop timings: 9:00 am to 10:00 pm.</h2>
+        <h2>{{people}} people can be served from current time:- {{current_time}}.</h2>
+      </div>
+    </div>
+  </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" integrity="sha256-qM7QTJSlvtPSxVRjVWNM2OfTAz/3k5ovHOKmKXuYMO4=" crossorigin="anonymous"></script>
+</html>
